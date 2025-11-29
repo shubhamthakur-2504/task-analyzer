@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Task Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🎯 Smart Task Analyzer</h1>
+            <p class="subtitle">Intelligently prioritize your tasks based on multiple factors</p>
+        </header>
+
+        <!-- Strategy Selector -->
+        <div class="strategy-section">
+            <label for="strategy">Sorting Strategy:</label>
+            <select id="strategy" class="strategy-select">
+                <option value="smart_balance">Smart Balance (Recommended)</option>
+                <option value="fastest_wins">Fastest Wins</option>
+                <option value="high_impact">High Impact</option>
+                <option value="deadline_driven">Deadline Driven</option>
+            </select>
+            <div class="strategy-info">
+                <p id="strategy-description">Balanced weighting of urgency, importance, effort, and dependencies</p>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="main-grid">
+            <!-- Input Section -->
+            <div class="card input-section">
+                <h2>📝 Add Tasks</h2>
+                
+                <!-- Individual Task Form -->
+                <form id="task-form" class="task-form">
+                    <div class="form-group">
+                        <label for="title">Task Title *</label>
+                        <input type="text" id="title" required placeholder="e.g., Fix login bug">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="due_date">Due Date *</label>
+                            <input type="date" id="due_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="estimated_hours">Estimated Hours *</label>
+                            <input type="number" id="estimated_hours" step="0.1" min="0.1" required placeholder="e.g., 3">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="importance">Importance: <span id="importance-value">5</span></label>
+                        <input type="range" id="importance" min="1" max="10" value="5" class="slider">
+                        <div class="slider-labels">
+                            <span>Low (1)</span>
+                            <span>High (10)</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dependencies">Dependencies (comma-separated IDs)</label>
+                        <input type="text" id="dependencies" placeholder="e.g., 1, 2, 3">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">➕ Add Task</button>
+                </form>
+
+                <div class="divider">OR</div>
+
+                <!-- Bulk JSON Input -->
+                <div class="json-input-section">
+                    <label for="json-input">Paste JSON Array:</label>
+                    <textarea id="json-input" class="json-textarea" placeholder='[{"title": "Task 1", "due_date": "2025-12-01", "estimated_hours": 3, "importance": 8, "dependencies": []}]'></textarea>
+                    <button id="load-json-btn" class="btn btn-secondary">📋 Load from JSON</button>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="analyze-btn" class="btn btn-success">🔍 Analyze Tasks</button>
+                    <button id="suggest-btn" class="btn btn-info">💡 Get Top 3 Suggestions</button>
+                    <button id="clear-btn" class="btn btn-danger">🗑️ Clear All</button>
+                </div>
+            </div>
+
+            <!-- Output Section -->
+            <div class="card output-section">
+                <h2>📊 Analysis Results</h2>
+                
+                <div id="loading" class="loading hidden">
+                    <div class="spinner"></div>
+                    <p>Analyzing tasks...</p>
+                </div>
+
+                <div id="error-message" class="error-message hidden"></div>
+
+                <div id="results-container">
+                    <div class="empty-state">
+                        <p>👈 Add tasks and click "Analyze Tasks" to see prioritized results</p>
+                    </div>
+                </div>
+
+                <div id="suggestions-container" class="hidden">
+                    <h3>🌟 Top 3 Recommendations</h3>
+                    <div id="suggestions-list"></div>
+                </div>
+
+                <div id="tasks-container" class="hidden">
+                    <h3>All Tasks (Sorted by Priority)</h3>
+                    <div id="tasks-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Tasks List -->
+        <div class="card current-tasks">
+            <h3>Current Tasks in Queue (<span id="task-count">0</span>)</h3>
+            <div id="current-tasks-list" class="current-tasks-list">
+                <p class="empty-state">No tasks added yet</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Built for Singularium Internship Assignment 2025</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
